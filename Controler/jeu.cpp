@@ -85,7 +85,12 @@ void contamination(Plateau* p, int pos_x, int pos_y) {
 void lancerPartie(int size_x, int size_y, float mine) {
 
 	// création de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(size_x*20, size_y*20), "Demineur");
+	sf::RenderWindow window(sf::VideoMode(size_x*20, size_y*20), "Demineur by Thibaud");
+	sf::Image icon;
+
+	icon.loadFromFile("Assets/mine.png");
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
 
 	Plateau* plateau = new Plateau(size_x, size_y);
 	int state = 0, x = 0, y = 0;
@@ -103,9 +108,6 @@ void lancerPartie(int size_x, int size_y, float mine) {
 		}
 		window.clear(sf::Color::White);
 
-		afficherPlateauSFML(plateau, window);
-		window.display();
-
 		if (isWin(plateau) == 0 && state != -1) {
 
 			//JEU
@@ -113,50 +115,33 @@ void lancerPartie(int size_x, int size_y, float mine) {
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
 				if (event.mouseButton.button == sf::Mouse::Right)
-				{
-
 					flag(plateau, event.mouseButton.x/20, event.mouseButton.y/20);
-
-
-					std::cout << "the left button was pressed" << std::endl;
-					std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-					std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-				}
 				else if (event.mouseButton.button == sf::Mouse::Left)
-				{
 					state = openCase(plateau, event.mouseButton.x/20 , event.mouseButton.y/20);
-					std::cout << "the right button was pressed" << std::endl;
-					std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-					std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-				}
 			}
-
-
-			afficherPlateauSFML(plateau, window);
-
 		}
 
-		if (isWin(plateau) == 1 && state == 0) {
-			std::cout << "Vous avez gagné !!!\n";
-			state = 1;
-			// while pas clic souris
+		//Condition de fin de partie
+		else if (isWin(plateau) == 1 && state == 0) { //si win
 
-			/*if (event.type == sf::Event::MouseButtonPressed)
-			{
-				break;
-			}*/
+			state = 2;
+		}
+		else if (state == -1) { //si loose
+			state = 2;
+		}
 
+		afficherPlateauSFML(plateau, window);
+		window.display();
+
+
+		if (state == 2)
+		{
+			sf::sleep(sf::seconds(5));
+			break;
 		}
-		else if (state == -1) {
-			state = 1;
-			std::cout << "BOOOOOOOMMMM!!! Vous avez perdu\n";
-			/*
-			//break;
-			if (event.type == sf::Event::MouseButtonPressed)
-			{
-				break;
-			}*/
-		}
+
+
+		
 
 	}
 }

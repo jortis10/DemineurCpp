@@ -8,11 +8,8 @@
 
 int main()
 {
-    system("mode con LINES=20 COLS=50");
+    //system("mode con LINES=20 COLS=50");
     lancerPartie(20, 20, 0.2);
-
-
-    system("pause");
 
     return 0;
 }
