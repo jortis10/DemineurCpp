@@ -123,10 +123,11 @@ void lancerPartie(int size_x, int size_y, float mine) {
 
 		//Condition de fin de partie
 		else if (isWin(plateau) == 1 && state == 0) { //si win
-
+			window.setTitle("WIN !!!");
 			state = 2;
 		}
 		else if (state == -1) { //si loose
+			window.setTitle("PERDU !!!");
 			state = 2;
 		}
 
