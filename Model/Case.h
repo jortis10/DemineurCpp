@@ -6,10 +6,6 @@
 class Case
 {
 
-private:
-
-
-
 public:
 	enum class Type
 	{
