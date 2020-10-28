@@ -18,7 +18,8 @@ public:
 		six,
 		sept,
 		huit,
-		mine
+		mine,
+		boom
 	};
 
 	enum class State

@@ -1,26 +1,18 @@
 #include <iostream>
 #include "Controler/jeu.h"
+#include "View/AffichageSFML.h"
+#include "Model/Plateau.h"
 
-#include <SFML/Window.hpp>
+
+#include <SFML/Graphics.hpp>
 
 int main()
 {
-    sf::Window window(sf::VideoMode(800, 600), "My window");
-    window.setVerticalSyncEnabled(true);
-
-    while (window.isOpen())
-    {
-        lancerPartie(20, 20, 0.3);
+    system("mode con LINES=20 COLS=50");
+    lancerPartie(20, 20, 0.2);
 
 
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-    }
+    system("pause");
 
     return 0;
 }

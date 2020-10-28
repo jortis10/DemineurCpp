@@ -127,6 +127,7 @@
     <ClCompile Include="model\Case.cpp" />
     <ClCompile Include="model\Plateau.cpp" />
     <ClCompile Include="view\Affichage.cpp" />
+    <ClCompile Include="View\AffichageSFML.cpp" />
     <ClCompile Include="view\ConsoleColor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -134,8 +135,12 @@
     <ClInclude Include="model\Case.h" />
     <ClInclude Include="model\Plateau.h" />
     <ClInclude Include="view\Affichage.h" />
+    <ClInclude Include="View\AffichageSFML.h" />
     <ClInclude Include="view\ConsoleColor.h" />
     <ClInclude Include="view\setcolor_manip.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\close.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

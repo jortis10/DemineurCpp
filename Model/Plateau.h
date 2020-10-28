@@ -19,14 +19,13 @@ private:
 
 public:
 	Plateau(int size_x, int size_y);
-	~Plateau();
 
 	void resizePlateau(int size_x, int size_y);
 	int get_size_x();
 	int get_size_y();
 	Case* getCase(int i, int j);
 	void initPlateau();
-	void remplirPlateau(int mine);
+	void remplirPlateau(float mine);
 
 };
 
