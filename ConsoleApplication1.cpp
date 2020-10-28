@@ -2,12 +2,10 @@
 #include "Controler/jeu.h"
 
 
-
-
 int main()
 {
 
-    lancerPartie(20, 20, 0.3);
+    lancerPartie(30, 30, 0.3);
 
     return 0;
 }

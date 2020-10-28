@@ -98,8 +98,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="controler\jeu.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="model\Case.cpp" />
     <ClCompile Include="model\Plateau.cpp" />
     <ClCompile Include="view\Affichage.cpp" />
