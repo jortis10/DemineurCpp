@@ -18,7 +18,7 @@ void lancerJeu() {
 	int mine = 4;
 
 	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur");
-	menu.setFramerateLimit(30);
+	menu.setFramerateLimit(60);
 	tgui::Gui gui{ menu };
 
 	sf::String select;
