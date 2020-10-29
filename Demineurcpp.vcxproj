@@ -106,20 +106,23 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>C:\SFML\TGUI\include;C:\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SFML\TGUI\lib;C:\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;tgui-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-system-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;tgui-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>C:\SFML\TGUI\include;C:\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SFML\TGUI\lib;C:\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio.lib;sfml-main.lib;sfml-system.lib;sfml-graphics.lib;sfml-window.lib;tgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;tgui-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -141,7 +144,23 @@
     <ClInclude Include="view\setcolor_manip.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\boom.png" />
+    <Image Include="Assets\cinq.png" />
     <Image Include="Assets\close.png" />
+    <Image Include="Assets\deux.png" />
+    <Image Include="Assets\drapeau.png" />
+    <Image Include="Assets\huit.png" />
+    <Image Include="Assets\mine.png" />
+    <Image Include="Assets\quatre.png" />
+    <Image Include="Assets\sept.png" />
+    <Image Include="Assets\six.png" />
+    <Image Include="Assets\textfield.png" />
+    <Image Include="Assets\trois.png" />
+    <Image Include="Assets\un.png" />
+    <Image Include="Assets\vide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="menu.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

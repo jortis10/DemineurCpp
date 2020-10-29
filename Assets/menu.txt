@@ -1,0 +1,131 @@
+Renderer.1 {
+    backgroundcolor = #F5F5F5;
+    backgroundcolordisabled = #E6E6E6;
+    backgroundcolorhover = white;
+    bordercolor = #3C3C3C;
+    bordercolordisabled = #7D7D7D;
+    bordercolorhover = black;
+    borders = (1, 1, 1, 1);
+    caretcolor = black;
+    caretwidth = 1;
+    defaulttextcolor = #A0A0A0;
+    padding = (0, 0, 0, 0);
+    selectedtextbackgroundcolor = #006EFF;
+    selectedtextcolor = white;
+    textcolor = #3C3C3C;
+    textcolordisabled = #7D7D7D;
+    texture = None;
+    texturedisabled = None;
+    texturefocused = None;
+    texturehover = None;
+}
+
+Renderer.2 {
+    backgroundcolor = transparent;
+    bordercolor = #3C3C3C;
+    borders = (0, 0, 0, 0);
+    textcolor = #3C3C3C;
+    texturebackground = None;
+}
+
+EditBox.mine_box {
+    InputValidator = Int;
+    Position = (110, 40);
+    Size = (160, 22);
+    TextSize = 13;
+    UserData = mine;
+    renderer = &1;
+}
+
+EditBox.width_box {
+    InputValidator = Int;
+    Position = (110, 80);
+    Size = (160, 22);
+    TextSize = 13;
+    UserData = width;
+    renderer = &1;
+}
+
+EditBox.height_box {
+    InputValidator = Int;
+    Position = (110, 120);
+    Size = (160, 22);
+    TextSize = 13;
+    UserData = height;
+    renderer = &1;
+}
+
+Label.Mine {
+    AutoSize = true;
+    Position = (50, 40);
+    ScrollbarPolicy = Never;
+    Size = (32.2, 18);
+    Text = Mine;
+    TextSize = 13;
+    renderer = &2;
+}
+
+Label.width {
+    AutoSize = true;
+    Position = (50, 80);
+    ScrollbarPolicy = Never;
+    Size = (52.2, 18);
+    Text = Largeur;
+    TextSize = 13;
+    renderer = &2;
+}
+
+Label.height {
+    AutoSize = true;
+    Position = (50, 120);
+    ScrollbarPolicy = Never;
+    Size = (54.2, 18);
+    Text = Hauteur;
+    TextSize = 13;
+    renderer = &2;
+}
+
+Button.button {
+    Position = (170, 160);
+    Text = Go;
+    TextSize = 13;
+
+    Renderer {
+        backgroundcolor = #F5F5F5;
+        backgroundcolordisabled = #E6E6E6;
+        backgroundcolordown = #EBEBEB;
+        backgroundcolorhover = white;
+        bordercolor = #3C3C3C;
+        bordercolordisabled = #7D7D7D;
+        bordercolordown = black;
+        bordercolorfocused = #1E1EB4;
+        bordercolorhover = black;
+        borders = (1, 1, 1, 1);
+        textcolor = #3C3C3C;
+        textcolordisabled = #7D7D7D;
+        textcolordown = black;
+        textcolorhover = black;
+        texture = None;
+        texturedisabled = None;
+        texturedown = None;
+        texturefocused = None;
+        texturehover = None;
+    }
+}
+
+Label.error {
+    Position = (110, 10);
+    ScrollbarPolicy = Never;
+    Size = (157.2, 13.1613);
+    TextSize = 13;
+    renderer = &2;
+}
+
+Label.text_a {
+    Position = (240, 180);
+    ScrollbarPolicy = Never;
+    Size = (141.2, 18);
+    Text = "Demineur by Thibaud";
+    TextSize = 11;
+    renderer = &2;
+}

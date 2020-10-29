@@ -61,8 +61,52 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\boom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\cinq.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\deux.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\drapeau.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\huit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\mine.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\quatre.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\sept.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\six.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\textfield.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\trois.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\un.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\vide.png">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="Assets\close.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="menu.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

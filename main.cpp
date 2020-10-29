@@ -2,7 +2,7 @@
 
 
 
-int main()
+int WinMain()
 {
 
     lancerJeu();

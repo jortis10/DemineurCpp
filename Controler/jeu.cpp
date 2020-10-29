@@ -17,47 +17,51 @@ void lancerJeu() {
 	int width = 30, height = 30;
 	int mine = 4;
 
-	sf::RenderWindow menu(sf::VideoMode(20 * 20, 10 * 20), "Demineur by Thibaud");
+	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur");
 	tgui::Gui gui{ menu };
 
 	sf::Image icon;
 
 
+
 	icon.loadFromFile("Assets/mine.png");
 	menu.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-	gui.loadWidgetsFromFile("menu.txt");
+	gui.loadWidgetsFromFile("Assets/menu.txt");
 
 	tgui::EditBox::Ptr mine_box = gui.get<tgui::EditBox>("mine_box");
 	tgui::EditBox::Ptr width_box = gui.get<tgui::EditBox>("width_box");
 	tgui::EditBox::Ptr height_box = gui.get<tgui::EditBox>("height_box");
 	tgui::Button::Ptr button = gui.get<tgui::Button>("button");
+	tgui::Label::Ptr error = gui.get<tgui::Label>("error");
 
+	error->setTextSize(9);
 
-	
 
 	button->connect("pressed", [&]() {
 
-
+		//Si les champs sont vides
 		if (mine_box->getText().isEmpty()
 			|| width_box->getText().isEmpty()
 			|| height_box->getText().isEmpty()) {
 
-			//Pas bon
-			mine = 0;
-			width = 10;
-			height = 10;
-		}
+			error->setText("Veuillez remplir tout les champs");
+		}//sinon les champs sont plein
 		else {
 			mine = std::stoi(mine_box->getText().toAnsiString());
 			width = std::stoi(width_box->getText().toAnsiString());
 			height = std::stoi(height_box->getText().toAnsiString());
 
+			//si mine trop grand
 			if (mine <= 0 || mine >= width*height-1) {
 				//Pas bon
-				mine = width * height / 50;
-
-
+				error->setText("Trop de mines");
+			}
+			else if (width > 99 || height > 99) {
+				error->setText("Trop grand");
+			}
+			else if (width < 1 || height < 1) {
+				error->setText("Trop petit");
 			}
 			else {
 				
@@ -67,13 +71,9 @@ void lancerJeu() {
 		}
 	});
 
-	//button->connect("pressed", mine_box, width_box, height_box);
-
 	while (menu.isOpen())
 	{
 		menu.clear(sf::Color::White);
-
-
 
 		sf::Event event_menu;
 		while (menu.pollEvent(event_menu))
@@ -83,14 +83,9 @@ void lancerJeu() {
 			gui.handleEvent(event_menu);
 		}
 
-
-
-
-		//menu.draw(playerText);
 		gui.draw();
 		gui.get("height_box");
 	
-		//affichageMenu(menu);
 		menu.display();
 	}
 
@@ -100,7 +95,7 @@ void lancerPartie(int size_x, int size_y, int mine) {
 	// création de la fenêtre
 
 
-	sf::RenderWindow window(sf::VideoMode(size_x * 20, size_y * 20), "Demineur by Thibaud");
+	sf::RenderWindow window(sf::VideoMode(size_x * 20, size_y * 20), "Demineur");
 	sf::Image icon;
 
 	icon.loadFromFile("Assets/mine.png");
@@ -139,7 +134,7 @@ void lancerPartie(int size_x, int size_y, int mine) {
 			}
 
 			//Condition de fin de partie
-			else if (isWin(plateau) == 1 && state == 0) { //si win
+			else if (isWin(plateau) == 1 && state != -1) { //si win
 				window.setTitle("WIN !!!");
 				state = 2;
 			}
