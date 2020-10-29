@@ -47,7 +47,7 @@ ComboBox.select_diff {
     ChangeItemOnScroll = true;
     ExpandDirection = Down;
     Items = [Facile, Normale, Difficile, Expert, Armageddon];
-    ItemsToDisplay = 0;
+    ItemsToDisplay = 1;
     MaximumItems = 0;
     Position = (90, 70);
     Size = (200, 22);

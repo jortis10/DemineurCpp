@@ -121,7 +121,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\SFML\TGUI\lib;C:\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;tgui-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-s.lib;sfml-audio-s.lib;sfml-window-s.lib;sfml-system-s.lib;tgui-s.lib;opengl32.lib;freetype.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

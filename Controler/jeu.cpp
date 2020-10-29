@@ -20,6 +20,8 @@ void lancerJeu() {
 	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur");
 	tgui::Gui gui{ menu };
 
+	sf::String select;
+
 	sf::Image icon;
 
 
@@ -29,51 +31,60 @@ void lancerJeu() {
 
 	gui.loadWidgetsFromFile("Assets/menu.txt");
 
-	tgui::EditBox::Ptr mine_box = gui.get<tgui::EditBox>("mine_box");
-	tgui::EditBox::Ptr width_box = gui.get<tgui::EditBox>("width_box");
-	tgui::EditBox::Ptr height_box = gui.get<tgui::EditBox>("height_box");
+	
 	tgui::Button::Ptr button = gui.get<tgui::Button>("button");
-	tgui::Label::Ptr error = gui.get<tgui::Label>("error");
+	tgui::ComboBox::Ptr select_diff = gui.get<tgui::ComboBox>("select_diff");
 
-	error->setTextSize(9);
+	select_diff->setSelectedItem("Normale");
 
+	
 
 	button->connect("pressed", [&]() {
+		if (!select.isEmpty()) {
 
-		//Si les champs sont vides
-		if (mine_box->getText().isEmpty()
-			|| width_box->getText().isEmpty()
-			|| height_box->getText().isEmpty()) {
+			if (select == "Facile") {
+				mine = 20;
+				width = 10;
+				height = 10;
 
-			error->setText("Veuillez remplir tout les champs");
-		}//sinon les champs sont plein
-		else {
-			mine = std::stoi(mine_box->getText().toAnsiString());
-			width = std::stoi(width_box->getText().toAnsiString());
-			height = std::stoi(height_box->getText().toAnsiString());
+			}
+			else if (select == "Normale") {
+				mine = 70;
+				width = 20;
+				height = 20;
 
-			//si mine trop grand
-			if (mine <= 0 || mine >= width*height-1) {
-				//Pas bon
-				error->setText("Trop de mines");
 			}
-			else if (width > 99 || height > 99) {
-				error->setText("Trop grand");
+			else if (select == "Difficile") {
+				mine = 150;
+				width = 30;
+				height = 30;
+
 			}
-			else if (width < 1 || height < 1) {
-				error->setText("Trop petit");
+			else if (select == "Expert") {
+				mine = 250;
+				width = 40;
+				height = 40;
+
 			}
-			else {
-				
-				menu.close();
-				lancerPartie(width, height, mine);
+			else if (select == "Armageddon") {
+				mine = 600;
+				width = 50;
+				height = 50;
+
 			}
+
+			menu.close();
+			lancerPartie(width, height, mine);
 		}
+		
+	
 	});
 
 	while (menu.isOpen())
 	{
 		menu.clear(sf::Color::White);
+
+		select = select_diff->getSelectedItem();
 
 		sf::Event event_menu;
 		while (menu.pollEvent(event_menu))
@@ -82,6 +93,8 @@ void lancerJeu() {
 				menu.close();
 			gui.handleEvent(event_menu);
 		}
+
+	
 
 		gui.draw();
 		gui.get("height_box");
@@ -135,11 +148,17 @@ void lancerPartie(int size_x, int size_y, int mine) {
 
 			//Condition de fin de partie
 			else if (isWin(plateau) == 1 && state != -1) { //si win
-				window.setTitle("WIN !!!");
+				window.setTitle("WIN");
+
+				//Jouer un son
+
 				state = 2;
 			}
 			else if (state == -1) { //si loose
-				window.setTitle("PERDU !!!");
+				window.setTitle("BOOOOOOOOOM");
+
+				//Jouer un son
+
 				state = 2;
 			}
 			afficherPlateauSFML(plateau, window);
