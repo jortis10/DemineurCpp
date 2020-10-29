@@ -3,7 +3,6 @@
 
 #include "case.h"
 
-#define MINE 0.1
 #define MAX 99
 
 

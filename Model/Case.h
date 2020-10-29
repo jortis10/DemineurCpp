@@ -42,8 +42,6 @@ public:
 };
 
 
-
-
 #endif // !CASE_H_INCLUDED
 
 

@@ -1,14 +1,9 @@
-
-#include <iostream>
 #include <random>
 #include <functional>
 #include <chrono>
-#include <conio.h>
 
 #include "Plateau.h"
 #include "Case.h"
-#include "../View/ConsoleColor.h"
-#include "../View/setcolor_manip.h"
 
 
 Plateau::Plateau(int size_x, int size_y) {
@@ -29,19 +24,13 @@ void Plateau::resizePlateau(int size_x, int size_y)
 int Plateau::get_size_x() {
 	return m_size_x;
 }
-
 int Plateau::get_size_y() {
 	return m_size_y;
 }
-
 Case* Plateau::getCase(int i,int j) {
 	return cases[i][j];
 
 }
-
-
-
-
 void Plateau::initPlateau() {
 
 	for (int i = 0; i < m_size_y; i++)
@@ -52,7 +41,6 @@ void Plateau::initPlateau() {
 		}
 	}
 }
-
 void Plateau::remplirPlateau(int mine) {
 
 	std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());

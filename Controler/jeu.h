@@ -11,15 +11,9 @@ void openAllCase(Plateau* p);
 void contamination(Plateau* p, int pos_x, int pos_y);
 void flag(Plateau* p, int pos_x, int pos_y);
 
-void lancerPartie(int size_x, int size_y, int mine);
+void lancerPartie(int width, int height, int mine);
 void lancerJeu();
 int isWin(Plateau* p);
-
-int getMine();
-int getWidth();
-int getHeight();
-
-
 
 
 #endif // !JEU_H_INCLUDED

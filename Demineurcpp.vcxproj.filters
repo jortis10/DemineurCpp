@@ -24,12 +24,6 @@
     <ClCompile Include="model\Plateau.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="view\Affichage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="view\ConsoleColor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,66 +41,24 @@
     <ClInclude Include="model\Plateau.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="view\Affichage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="view\ConsoleColor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="view\setcolor_manip.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="View\AffichageSFML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\boom.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\cinq.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\deux.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\drapeau.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\huit.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\mine.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\quatre.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\sept.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\six.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\textfield.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\trois.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\un.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\vide.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Assets\close.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <Text Include="Assets\menu.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="menu.txt">
+    <ResourceCompile Include="Demineurcpp.rc">
       <Filter>Resource Files</Filter>
-    </Text>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\boom.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

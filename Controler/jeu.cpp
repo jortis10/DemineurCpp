@@ -1,44 +1,26 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include "jeu.h"
 #include <TGUI/TGUI.hpp>
+
+#include "jeu.h"
 #include "../Model/Plateau.h"
-#include "../Model/Case.h"
-#include "../View/Affichage.h"
 #include "../View/AffichageSFML.h"
-
-
-
 
 
 void lancerJeu() {
 
-	int width = 30, height = 30;
-	int mine = 4;
+	int width,height,mine;
+	sf::String select;
 
 	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur");
+	setIcon(menu);
 	menu.setFramerateLimit(30);
 	tgui::Gui gui{ menu };
 
-	sf::String select;
-
-	sf::Image icon;
-
-
-
-	icon.loadFromFile("Assets/mine.png");
-	menu.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
 	gui.loadWidgetsFromFile("Assets/menu.txt");
 
-	
 	tgui::Button::Ptr button = gui.get<tgui::Button>("button");
 	tgui::ComboBox::Ptr select_diff = gui.get<tgui::ComboBox>("select_diff");
 
 	select_diff->setSelectedItem("Normale");
-
-	
 
 	button->connect("pressed", [&]() {
 		if (!select.isEmpty()) {
@@ -96,34 +78,25 @@ void lancerJeu() {
 		}
 
 	
-
 		gui.draw();
-		gui.get("height_box");
-	
 		menu.display();
 	}
 
 }
-void lancerPartie(int size_x, int size_y, int mine) {
+void lancerPartie(int width, int height, int mine) {
 
-	// création de la fenêtre
-
-
-	sf::RenderWindow window(sf::VideoMode(size_x * 20, size_y * 20), "Demineur");
-	window.setFramerateLimit(30);
-	sf::Image icon;
-
-	icon.loadFromFile("Assets/mine.png");
-	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-
-
-	Plateau* plateau = new Plateau(size_x, size_y);
-
-	int state = 0, x = 0, y = 0;
-	char flags = 'x';
+	Plateau* plateau = new Plateau(width, height);
+	int state = 0;
 
 	plateau->remplirPlateau(mine);
 
+	// création de la fenêtre
+	sf::RenderWindow window(sf::VideoMode(width * 20, height * 20), "Demineur");
+	window.setFramerateLimit(120);
+
+	setIcon(window);
+
+	
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -163,19 +136,16 @@ void lancerPartie(int size_x, int size_y, int mine) {
 
 				state = 2;
 			}
-			afficherPlateauSFML(plateau, window);
+			if (state == 2)
+			{
+				sf::sleep(sf::seconds(5));
+
+				window.close();
+				lancerJeu();
+			}
 		
-
-		//afficherPlateauSFML(plateau, window);
+		afficherPlateauSFML(plateau, window);
 		window.display();
-
-
-		if (state == 2)
-		{
-			sf::sleep(sf::seconds(5));
-			window.close();
-			lancerJeu();
-		}
 	}
 }
 int openCase(Plateau* p,int pos_x,int pos_y) {
@@ -193,7 +163,6 @@ int openCase(Plateau* p,int pos_x,int pos_y) {
 	else {
 		p->getCase(pos_y, pos_x)->m_state = Case::State::open;
 		return 0;
-
 	}
 }
 
@@ -276,79 +245,3 @@ void flag(Plateau* p, int pos_x, int pos_y) {
 	p->getCase(pos_y, pos_x)->m_isFlag = 1;
 
 }
-int getMine() {
-	std::ifstream config("../config.txt");
-
-	int mine = 0, i=0;
-	std::string ligne;
-
-	if (config)
-	{
-		while (std::getline(config, ligne)) {
-			if (i == 0) {
-				mine = std::stoi(ligne);
-			}
-
-			i++;
-		}
-	}
-	else
-	{
-		std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-	}
-
-	config.close();
-	return mine;
-}
-int getWidth() {
-
-	int width=0,i=0;
-
-	std::ifstream config("C:/Users/Thiba/Desktop/Demineurcpp/config.txt");
-	std::string ligne;
-
-	if (config)
-	{
-		while (std::getline(config, ligne)) {
-			if (i == 1) {
-				width = std::stoi(ligne);
-			}
-
-			i++;
-		}
-	}
-	else
-	{
-		std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-	}
-
-	config.close();
-	return width;
-}
-
-int getHeight() {
-
-	int height=0,i = 0;
-
-	std::ifstream config("config.txt");
-	std::string ligne;
-
-	if (config)
-	{
-		while (std::getline(config, ligne)) {
-			if (i == 2) {
-				height = std::stoi(ligne);
-			}
-
-			i++;
-		}
-	}
-	else
-	{
-		std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-	}
-
-	config.close();
-	return height;
-}
-

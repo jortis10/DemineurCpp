@@ -1,7 +1,5 @@
-#include <SFML/Graphics.hpp>
 #include "AffichageSFML.h"
 #include "../Model/Plateau.h"
-#include <iostream>
 
 
 void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
@@ -49,8 +47,6 @@ void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
 	sprite_drapeau.setTexture(texture_drapeau);
 	sf::Sprite sprite_boom;
 	sprite_boom.setTexture(texture_boom);
-
-	sf::Vector2f positionSprite(0, 0);
 
 
 	for (int i = 0; i < (*p).get_size_y(); i++) {
@@ -154,18 +150,14 @@ sf::Texture loadTexture(std::string texture) {
 
 	if (!t.loadFromFile(texture))
 	{
-		std::cout << "Erreur de chargement de la texture close.png\n";
+		//Erreur
 	}
 
 	return t;
 }
 
-
-sf::Sprite loadSpriteWithTexture(sf::Texture texture, int pos_x, int pos_y) {
-
-	sf::Sprite sprite;
-
-	sprite.setTexture(texture);
-
-	return sprite;
+void setIcon(sf::RenderWindow& window) {
+	sf::Image icon;
+	icon.loadFromFile("Assets/mine.png");
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }

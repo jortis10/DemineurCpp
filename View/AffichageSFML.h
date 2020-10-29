@@ -3,7 +3,6 @@
 
 #include "../Model/Plateau.h"
 #include <SFML/Graphics.hpp>
-#include <string>
 
 
 #define WIDTH 400
@@ -11,7 +10,7 @@
 
 void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window);
 sf::Texture loadTexture(std::string texture);
-sf::Sprite loadSpriteWithTexture(sf::Texture texture, int pos_x, int pos_y);
+void setIcon(sf::RenderWindow& window);
 
 #endif // !AFFICHAGESFML_H_HEADER
 
