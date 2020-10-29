@@ -9,7 +9,7 @@
 #define WIDTH 400
 #define HEIGHT 400
 
-
+void affichageMenu(sf::RenderWindow& window);
 void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window);
 sf::Texture loadTexture(std::string texture);
 sf::Sprite loadSpriteWithTexture(sf::Texture texture, int pos_x, int pos_y);

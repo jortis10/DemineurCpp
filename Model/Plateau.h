@@ -25,7 +25,7 @@ public:
 	int get_size_y();
 	Case* getCase(int i, int j);
 	void initPlateau();
-	void remplirPlateau(float mine);
+	void remplirPlateau(int mine);
 
 };
 

@@ -53,7 +53,7 @@ void Plateau::initPlateau() {
 	}
 }
 
-void Plateau::remplirPlateau(float mine) {
+void Plateau::remplirPlateau(int mine) {
 
 	std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
 	std::default_random_engine rez(std::chrono::system_clock::now().time_since_epoch().count());
@@ -73,7 +73,7 @@ void Plateau::remplirPlateau(float mine) {
 		
 	/*Génération des mines*/
 	int i = 0;
-	while(i < int(get_size_x()*get_size_y()*(mine))){
+	while(i < (mine)){
 		int x = rd_x();
 		int y = rd_y();
 

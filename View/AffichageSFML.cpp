@@ -147,6 +147,47 @@ void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
 		}
 	}
 }
+void affichageMenu(sf::RenderWindow& window) {
+
+	sf::Texture texture_textfield = loadTexture("Assets/textfield.png");
+	sf::Sprite sprite_textfield;
+	sprite_textfield.setTexture(texture_textfield);
+
+	sf::Font font;
+	if (!font.loadFromFile("Assets/arial.ttf"))
+	{
+		// erreur...
+	}
+
+	sf::Text text;
+	text.setFont(font);
+	text.setColor(sf::Color::Black);
+	text.setCharacterSize(18);
+
+
+
+	for (int i = 0; i < 3; i++) {
+		sf::Vector2f positionSprite(150, i*40+50);
+		sf::Vector2f positionText(50, i * 40 + 52);
+
+		switch (i) {
+			case 0: text.setString("Mine");
+				break;
+			case 1: text.setString("Largeur");
+				break;
+			case 2: text.setString("Hauteur");
+				break;
+		}
+
+		text.setPosition(positionText);
+		sprite_textfield.setPosition(positionSprite);
+		window.draw(sprite_textfield);
+		window.draw(text);
+	}
+
+
+
+}
 
 
 sf::Texture loadTexture(std::string texture) {
