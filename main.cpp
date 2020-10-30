@@ -1,7 +1,5 @@
 #include "Controler/jeu.h"
 
-
-
 int WinMain()
 {
 

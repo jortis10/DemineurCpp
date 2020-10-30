@@ -2,46 +2,46 @@
 #include <functional>
 #include <chrono>
 
-#include "Plateau.h"
+#include "Terrain.h"
 #include "Case.h"
 
 
-Plateau::Plateau(int size_x, int size_y) {
+Terrain::Terrain(int size_x, int size_y) {
 
 	m_size_x = size_x;
 	m_size_y = size_y;
 
-	this->initPlateau();
+	this->initTerrain();
 }
 
-void Plateau::resizePlateau(int size_x, int size_y)
+void Terrain::resizeTerrain(int size_x, int size_y)
 {
 	m_size_x = size_x;
 	m_size_y = size_y;
 
 }
 
-int Plateau::get_size_x() {
+int Terrain::get_size_x() {
 	return m_size_x;
 }
-int Plateau::get_size_y() {
+int Terrain::get_size_y() {
 	return m_size_y;
 }
-Case* Plateau::getCase(int i,int j) {
+Case* Terrain::getCase(int i,int j) {
 	return cases[i][j];
 
 }
-void Plateau::initPlateau() {
+void Terrain::initTerrain() {
 
 	for (int i = 0; i < m_size_y; i++)
 	{
 		for (int j = 0; j < m_size_x; j++)
 		{
-			cases[i][j] = new Case(Case::Type::vide, Case::State::close,0, 0, 0);
+			cases[i][j] = new Case(Case::Type::vide, Case::State::close,0);
 		}
 	}
 }
-void Plateau::remplirPlateau(int mine) {
+void Terrain::remplirTerrain(int mine) {
 
 	std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
 	std::default_random_engine rez(std::chrono::system_clock::now().time_since_epoch().count());
@@ -55,7 +55,7 @@ void Plateau::remplirPlateau(int mine) {
 
 	for (int i = 0; i < m_size_y; i++) {
 		for (int j = 0; j < m_size_x; j++) {
-			cases[i][j]->modifyCase(Case::Type::vide, Case::State::close,0, j, i);
+			cases[i][j]->modifyCase(Case::Type::vide, Case::State::close,0);
 		}
 	}
 		
@@ -66,7 +66,7 @@ void Plateau::remplirPlateau(int mine) {
 		int y = rd_y();
 
 		if (cases[y][x]->m_type == Case::Type::vide) {
-			cases[y][x]->modifyCase(Case::Type::mine, Case::State::close,0, x, y);
+			cases[y][x]->modifyCase(Case::Type::mine, Case::State::close,0);
 			i++;
 		}
 			

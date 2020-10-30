@@ -5,8 +5,7 @@
 
 #define MAX 99
 
-
-class Plateau
+class Terrain
 {
 
 private:
@@ -15,16 +14,15 @@ private:
 	int m_size_y = 0;
 	Case* cases[MAX][MAX];
 
-
 public:
-	Plateau(int size_x, int size_y);
+	Terrain(int size_x, int size_y);
 
-	void resizePlateau(int size_x, int size_y);
+	void resizeTerrain(int size_x, int size_y);
 	int get_size_x();
 	int get_size_y();
 	Case* getCase(int i, int j);
-	void initPlateau();
-	void remplirPlateau(int mine);
+	void initTerrain();
+	void remplirTerrain(int mine);
 
 };
 

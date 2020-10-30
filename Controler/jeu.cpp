@@ -1,9 +1,8 @@
 #include <TGUI/TGUI.hpp>
 
 #include "jeu.h"
-#include "../Model/Plateau.h"
+#include "../Model/Terrain.h"
 #include "../View/AffichageSFML.h"
-
 
 void lancerJeu() {
 
@@ -59,8 +58,6 @@ void lancerJeu() {
 			menu.close();
 			lancerPartie(width, height, mine);
 		}
-		
-	
 	});
 
 	while (menu.isOpen())
@@ -85,10 +82,11 @@ void lancerJeu() {
 }
 void lancerPartie(int width, int height, int mine) {
 
-	Plateau* plateau = new Plateau(width, height);
+	Terrain* terrain = new Terrain(width, height);
 	int state = 0;
+	int i = 0;
 
-	plateau->remplirPlateau(mine);
+	terrain->remplirTerrain(mine);
 
 	// création de la fenêtre
 	sf::RenderWindow window(sf::VideoMode(width * 20, height * 20), "Demineur", sf::Style::Close);
@@ -108,23 +106,25 @@ void lancerPartie(int width, int height, int mine) {
 		window.clear(sf::Color::White);
 
 		/*JEU*/
-			if (isWin(plateau) == 0 && state != -1) {
+			if (isWin(terrain) == 0 && state != -1) {
+				i++;
+				window.setTitle("Bombe restante : "+std::to_string(possibleBombLeft(terrain,mine)));
 
 				//JEU
 
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
-					if (event.mouseButton.button == sf::Mouse::Right) {
-						flag(plateau, event.mouseButton.x / 20, event.mouseButton.y / 20);
+					if (event.mouseButton.button == sf::Mouse::Right && terrain->getCase(event.mouseButton.x / 20, event.mouseButton.y / 20)->m_state != Case::State::open) {
+						flag(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
 						sf::sleep(sf::milliseconds(100));
 					}
 					else if (event.mouseButton.button == sf::Mouse::Left)
-						state = openCase(plateau, event.mouseButton.x / 20, event.mouseButton.y / 20);
+						state = openCase(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
 				}
 			}
 
 			//Condition de fin de partie
-			else if (isWin(plateau) == 1 && state != -1) { //si win
+			else if (isWin(terrain) == 1 && state != -1) { //si win
 				window.setTitle("WIN");
 
 				//Jouer un son
@@ -146,11 +146,11 @@ void lancerPartie(int width, int height, int mine) {
 				lancerJeu();
 			}
 		
-		afficherPlateauSFML(plateau, window);
+		afficherTerrainSFML(terrain, window);
 		window.display();
 	}
 }
-int openCase(Plateau* p,int pos_x,int pos_y) {
+int openCase(Terrain* p,int pos_x,int pos_y) {
 
 	if (p->getCase(pos_y, pos_x)->m_type == Case::Type::mine && p->getCase(pos_y, pos_x)->m_state == Case::State::close) {
 		p->getCase(pos_y, pos_x)->m_type = Case::Type::boom;
@@ -164,11 +164,12 @@ int openCase(Plateau* p,int pos_x,int pos_y) {
 	}
 	else {
 		p->getCase(pos_y, pos_x)->m_state = Case::State::open;
+		p->getCase(pos_y, pos_x)->m_isFlag = 0;
 		return 0;
 	}
 }
 
-void openAllCase(Plateau* p) {
+void openAllCase(Terrain* p) {
 
 	for (int i = 0; i < p->get_size_y(); i++) {
 		for (int j = 0; j < p->get_size_x(); j++) {
@@ -179,98 +180,54 @@ void openAllCase(Plateau* p) {
 	}
 }
 
-void contamination(Plateau* p, int pos_x, int pos_y) {
+void contamination(Terrain* p, int pos_x, int pos_y) {
 
 	//Haut gauche
 	if (pos_y > 0
 		&& pos_x > 0
-		&& (p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::vide
-			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y - 1, pos_x - 1)->m_state == Case::State::close)
+		&& contaminationPossible(p,pos_x-1,pos_y-1))
 		openCase(p, pos_x - 1, pos_y - 1);
 
 	//Haut
 	if (pos_y > 0 
-		&& (p->getCase(pos_y - 1 , pos_x)->m_type == Case::Type::vide 
-			|| p->getCase(pos_y - 1, pos_x)->m_type == Case::Type::un
-			|| p->getCase(pos_y - 1, pos_x)->m_type == Case::Type::deux
-			|| p->getCase(pos_y - 1, pos_x)->m_type == Case::Type::trois
-			|| p->getCase(pos_y - 1, pos_x)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y - 1, pos_x)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x, pos_y - 1))
 		openCase(p, pos_x, pos_y - 1);
 
 	//Haut droite
 	if (pos_y > 0
 		&& pos_x < p->get_size_x() - 1
-		&& (p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::vide
-			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y - 1, pos_x + 1)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x + 1, pos_y - 1))
 		openCase(p, pos_x + 1, pos_y - 1);
 
 	//Droite
 	if (pos_x < p->get_size_x() - 1
-		&& (p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::vide
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y, pos_x + 1)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x + 1, pos_y))
 		openCase(p, pos_x + 1, pos_y);
 	
 	//Bas droite
 	if (pos_y < p->get_size_y() - 1
 		&& pos_x < p->get_size_x() - 1
-		&& (p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::vide
-			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y + 1, pos_x + 1)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x + 1, pos_y + 1))
 		openCase(p, pos_x + 1, pos_y + 1);
 
 	//Bas
 	if (pos_y < p->get_size_y()-1 
-		&& (p->getCase(pos_y+1, pos_x)->m_type == Case::Type::vide 
-			|| p->getCase(pos_y + 1, pos_x)->m_type == Case::Type::un
-			|| p->getCase(pos_y + 1, pos_x)->m_type == Case::Type::deux
-			|| p->getCase(pos_y + 1, pos_x)->m_type == Case::Type::trois
-			|| p->getCase(pos_y + 1, pos_x)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y+1, pos_x)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x, pos_y + 1))
 		openCase(p, pos_x, pos_y + 1);
-
 
 	//Bas gauche
 	if (pos_y < p->get_size_y() - 1
 		&& pos_x > 0
-		&& (p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::vide
-			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y + 1, pos_x - 1)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x - 1, pos_y + 1))
 		openCase(p, pos_x - 1, pos_y + 1);
 
 	//Gauche
 	if (pos_x > 0 
-		&& (p->getCase(pos_y, pos_x-1)->m_type == Case::Type::vide 
-			|| p->getCase(pos_y, pos_x - 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y, pos_x - 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y, pos_x - 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y, pos_x - 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y, pos_x-1)->m_state == Case::State::close)
+		&& contaminationPossible(p, pos_x - 1, pos_y))
 		openCase(p, pos_x - 1, pos_y);
 
-	
-
-
 }
-int isWin(Plateau* p) {
+int isWin(Terrain* p) {
 
 	int caseLeft = 0;
 
@@ -289,13 +246,46 @@ int isWin(Plateau* p) {
 	return 0;
 }
 
-void flag(Plateau* p, int pos_x, int pos_y) {
+int possibleBombLeft(Terrain* p, int mine) {
 
-	
+	int bombLeft = 0;
+
+	for (int i = 0; i < p->get_size_y(); i++) {
+		for (int j = 0; j < p->get_size_x(); j++) {
+
+			if (p->getCase(i, j)->m_isFlag == 1)
+				bombLeft++;
+		}
+	}
+
+	if (bombLeft > mine) {
+		return 0;
+	}
+
+	return mine-bombLeft;
+}
+
+void flag(Terrain* p, int pos_x, int pos_y) {
 
 	if(p->getCase(pos_y,pos_x)->m_isFlag == 1)
 		p->getCase(pos_y, pos_x)->m_isFlag = 0;
 	else if(p->getCase(pos_y, pos_x)->m_isFlag == 0)
 		p->getCase(pos_y, pos_x)->m_isFlag = 1;
+
+}
+
+bool contaminationPossible(Terrain* p,int pos_x,int pos_y) {
+
+	if ((p->getCase(pos_y, pos_x)->m_type == Case::Type::vide
+		|| p->getCase(pos_y, pos_x)->m_type == Case::Type::un
+		|| p->getCase(pos_y, pos_x)->m_type == Case::Type::deux
+		|| p->getCase(pos_y, pos_x)->m_type == Case::Type::trois
+		|| p->getCase(pos_y, pos_x)->m_type == Case::Type::quatre)
+		&& p->getCase(pos_y, pos_x)->m_state == Case::State::close)
+		return true;
+	else
+		return false;
+
+
 
 }

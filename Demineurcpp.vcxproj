@@ -129,13 +129,13 @@
     <ClCompile Include="controler\jeu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="model\Case.cpp" />
-    <ClCompile Include="model\Plateau.cpp" />
+    <ClCompile Include="model\Terrain.cpp" />
     <ClCompile Include="View\AffichageSFML.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="controler\jeu.h" />
     <ClInclude Include="model\Case.h" />
-    <ClInclude Include="model\Plateau.h" />
+    <ClInclude Include="model\Terrain.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="View\AffichageSFML.h" />
   </ItemGroup>

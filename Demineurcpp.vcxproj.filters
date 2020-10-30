@@ -21,13 +21,13 @@
     <ClCompile Include="model\Case.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="model\Plateau.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="View\AffichageSFML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="model\Terrain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +38,13 @@
     <ClInclude Include="model\Case.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="model\Plateau.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="View\AffichageSFML.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="model\Terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

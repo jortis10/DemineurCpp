@@ -1,8 +1,8 @@
 #include "AffichageSFML.h"
-#include "../Model/Plateau.h"
+#include "../Model/Terrain.h"
 
 
-void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
+void afficherTerrainSFML(Terrain* p, sf::RenderWindow& window) {
 
 	/*Texture*/
 	sf::Texture texture_close = loadTexture("Assets/close.png");
@@ -55,9 +55,7 @@ void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
 			sf::Vector2f positionSprite(j * 20, i * 20);
 
 			//Affichage case non découverte
-			if (p->getCase(i, j)->m_pos_x == j
-				&& p->getCase(i, j)->m_pos_y == i
-				&& p->getCase(i, j)->m_state == Case::State::close
+			if (p->getCase(i, j)->m_state == Case::State::close
 				&& p->getCase(i, j)->m_isFlag == 0) {
 				
 				sprite_close.setPosition(positionSprite);
@@ -65,9 +63,7 @@ void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
 			}
 
 			//Affichage drapeau
-			else if (p->getCase(i, j)->m_pos_x == j
-				&& p->getCase(i, j)->m_pos_y == i
-				&& p->getCase(i, j)->m_state == Case::State::close
+			else if (p->getCase(i, j)->m_state == Case::State::close
 				&& p->getCase(i, j)->m_isFlag == 1) {
 
 				sprite_drapeau.setPosition(positionSprite);
@@ -75,10 +71,7 @@ void afficherPlateauSFML(Plateau* p, sf::RenderWindow& window) {
 			}
 
 			//affichage case découverte
-			else if (p->getCase(i, j)->m_pos_x == j
-				&& p->getCase(i, j)->m_pos_y == i
-				&& p->getCase(i, j)->m_state == Case::State::open) {
-
+			else if ( p->getCase(i, j)->m_state == Case::State::open) {
 
 				switch (p->getCase(i, j)->m_type) {
 
