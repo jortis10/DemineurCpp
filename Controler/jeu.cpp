@@ -26,33 +26,27 @@ void lancerJeu() {
 		if (!select.isEmpty()) {
 
 			if (select == "Facile") {
-				mine = 15;
-				width = 10;
-				height = 10;
+				mine = 10;
+				width = 8;
+				height = 11;
 
 			}
 			else if (select == "Normale") {
-				mine = 65;
-				width = 20;
+				mine = 39;
+				width = 14;
 				height = 20;
 
 			}
 			else if (select == "Difficile") {
-				mine = 140;
-				width = 30;
-				height = 30;
+				mine = 102;
+				width = 20;
+				height = 29;
 
 			}
 			else if (select == "Expert") {
 				mine = 230;
-				width = 40;
-				height = 40;
-
-			}
-			else if (select == "Armageddon") {
-				mine = 600;
-				width = 50;
-				height = 50;
+				width = 26;
+				height = 38;
 
 			}
 
@@ -90,7 +84,7 @@ void lancerPartie(int width, int height, int mine) {
 	terrain->remplirTerrain(mine);
 
 	// création de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(width * 20, height * 20), "Demineur", sf::Style::Close);
+	sf::RenderWindow window(sf::VideoMode(width * 25, height * 25), "Demineur", sf::Style::Close);
 	window.setFramerateLimit(120);
 
 	setIcon(window);
@@ -116,11 +110,11 @@ void lancerPartie(int width, int height, int mine) {
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
 					if (event.mouseButton.button == sf::Mouse::Right) {
-							flag(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
+							flag(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
 							sf::sleep(sf::milliseconds(100));
 					}
 					else if (event.mouseButton.button == sf::Mouse::Left)
-						state = openCase(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
+						state = openCase(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
 				}
 			}
 

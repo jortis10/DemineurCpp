@@ -20,43 +20,58 @@ void afficherTerrainSFML(Terrain* p, sf::RenderWindow& window) {
 	sf::Texture texture_boom = loadTexture("Assets/boom.png");
 
 
+
 	/*Sprite*/
 	sf::Sprite sprite_close;
 	sprite_close.setTexture(texture_close);
+	sprite_close.scale(SCALE, SCALE);
 	sf::Sprite sprite_vide;
 	sprite_vide.setTexture(texture_vide);
+	sprite_vide.scale(SCALE, SCALE);
 	sf::Sprite sprite_mine;
 	sprite_mine.setTexture(texture_mine);
+	sprite_mine.scale(SCALE, SCALE);
 	sf::Sprite sprite_un;
 	sprite_un.setTexture(texture_un);
+	sprite_un.scale(SCALE, SCALE);
 	sf::Sprite sprite_deux;
 	sprite_deux.setTexture(texture_deux);
+	sprite_deux.scale(SCALE, SCALE);
 	sf::Sprite sprite_trois;
 	sprite_trois.setTexture(texture_trois);
+	sprite_trois.scale(SCALE, SCALE);
 	sf::Sprite sprite_quatre;
 	sprite_quatre.setTexture(texture_quatre);
+	sprite_quatre.scale(SCALE, SCALE);
 	sf::Sprite sprite_cinq;
 	sprite_cinq.setTexture(texture_cinq);
+	sprite_cinq.scale(SCALE, SCALE);
 	sf::Sprite sprite_six;
 	sprite_six.setTexture(texture_six);
+	sprite_six.scale(SCALE, SCALE);
 	sf::Sprite sprite_sept;
 	sprite_sept.setTexture(texture_sept);
+	sprite_sept.scale(SCALE, SCALE);
 	sf::Sprite sprite_huit;
 	sprite_huit.setTexture(texture_huit);
+	sprite_huit.scale(SCALE, SCALE);
 	sf::Sprite sprite_drapeau;
 	sprite_drapeau.setTexture(texture_drapeau);
+	sprite_drapeau.scale(SCALE, SCALE);
 	sf::Sprite sprite_boom;
 	sprite_boom.setTexture(texture_boom);
+	sprite_boom.scale(SCALE, SCALE);
 
 
 	for (int i = 0; i < (*p).get_size_y(); i++) {
 		for (int j = 0; j < p->get_size_x(); j++) {
 
-			sf::Vector2f positionSprite(j * 20, i * 20);
+			sf::Vector2f positionSprite(j * 25, i * 25);
 
 			//Affichage case non découverte
 			if (p->getCase(i, j)->m_state == Case::State::close
 				&& p->getCase(i, j)->m_isFlag == 0) {
+				
 				
 				sprite_close.setPosition(positionSprite);
 				window.draw(sprite_close);

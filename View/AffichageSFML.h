@@ -4,9 +4,7 @@
 #include "../Model/Terrain.h"
 #include <SFML/Graphics.hpp>
 
-
-#define WIDTH 400
-#define HEIGHT 400
+#define SCALE 0.1953125
 
 void afficherTerrainSFML(Terrain* p, sf::RenderWindow& window);
 sf::Texture loadTexture(std::string texture);
