@@ -10,7 +10,7 @@ void lancerJeu() {
 	int width,height,mine;
 	sf::String select;
 
-	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur");
+	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur", sf::Style::Close);
 	setIcon(menu);
 	menu.setFramerateLimit(30);
 	tgui::Gui gui{ menu };
@@ -26,25 +26,25 @@ void lancerJeu() {
 		if (!select.isEmpty()) {
 
 			if (select == "Facile") {
-				mine = 20;
+				mine = 15;
 				width = 10;
 				height = 10;
 
 			}
 			else if (select == "Normale") {
-				mine = 70;
+				mine = 65;
 				width = 20;
 				height = 20;
 
 			}
 			else if (select == "Difficile") {
-				mine = 150;
+				mine = 140;
 				width = 30;
 				height = 30;
 
 			}
 			else if (select == "Expert") {
-				mine = 250;
+				mine = 230;
 				width = 40;
 				height = 40;
 
@@ -91,7 +91,7 @@ void lancerPartie(int width, int height, int mine) {
 	plateau->remplirPlateau(mine);
 
 	// création de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(width * 20, height * 20), "Demineur");
+	sf::RenderWindow window(sf::VideoMode(width * 20, height * 20), "Demineur", sf::Style::Close);
 	window.setFramerateLimit(120);
 
 	setIcon(window);
@@ -114,8 +114,10 @@ void lancerPartie(int width, int height, int mine) {
 
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
-					if (event.mouseButton.button == sf::Mouse::Right)
+					if (event.mouseButton.button == sf::Mouse::Right) {
 						flag(plateau, event.mouseButton.x / 20, event.mouseButton.y / 20);
+						sf::sleep(sf::milliseconds(100));
+					}
 					else if (event.mouseButton.button == sf::Mouse::Left)
 						state = openCase(plateau, event.mouseButton.x / 20, event.mouseButton.y / 20);
 				}
@@ -178,6 +180,18 @@ void openAllCase(Plateau* p) {
 }
 
 void contamination(Plateau* p, int pos_x, int pos_y) {
+
+	//Haut gauche
+	if (pos_y > 0
+		&& pos_x > 0
+		&& (p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::vide
+			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::un
+			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::deux
+			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::trois
+			|| p->getCase(pos_y - 1, pos_x - 1)->m_type == Case::Type::quatre)
+		&& p->getCase(pos_y - 1, pos_x - 1)->m_state == Case::State::close)
+		openCase(p, pos_x - 1, pos_y - 1);
+
 	//Haut
 	if (pos_y > 0 
 		&& (p->getCase(pos_y - 1 , pos_x)->m_type == Case::Type::vide 
@@ -187,7 +201,38 @@ void contamination(Plateau* p, int pos_x, int pos_y) {
 			|| p->getCase(pos_y - 1, pos_x)->m_type == Case::Type::quatre)
 		&& p->getCase(pos_y - 1, pos_x)->m_state == Case::State::close)
 		openCase(p, pos_x, pos_y - 1);
+
+	//Haut droite
+	if (pos_y > 0
+		&& pos_x < p->get_size_x() - 1
+		&& (p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::vide
+			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::un
+			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::deux
+			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::trois
+			|| p->getCase(pos_y - 1, pos_x + 1)->m_type == Case::Type::quatre)
+		&& p->getCase(pos_y - 1, pos_x + 1)->m_state == Case::State::close)
+		openCase(p, pos_x + 1, pos_y - 1);
+
+	//Droite
+	if (pos_x < p->get_size_x() - 1
+		&& (p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::vide
+			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::un
+			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::deux
+			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::trois
+			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::quatre)
+		&& p->getCase(pos_y, pos_x + 1)->m_state == Case::State::close)
+		openCase(p, pos_x + 1, pos_y);
 	
+	//Bas droite
+	if (pos_y < p->get_size_y() - 1
+		&& pos_x < p->get_size_x() - 1
+		&& (p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::vide
+			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::un
+			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::deux
+			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::trois
+			|| p->getCase(pos_y + 1, pos_x + 1)->m_type == Case::Type::quatre)
+		&& p->getCase(pos_y + 1, pos_x + 1)->m_state == Case::State::close)
+		openCase(p, pos_x + 1, pos_y + 1);
 
 	//Bas
 	if (pos_y < p->get_size_y()-1 
@@ -199,6 +244,18 @@ void contamination(Plateau* p, int pos_x, int pos_y) {
 		&& p->getCase(pos_y+1, pos_x)->m_state == Case::State::close)
 		openCase(p, pos_x, pos_y + 1);
 
+
+	//Bas gauche
+	if (pos_y < p->get_size_y() - 1
+		&& pos_x > 0
+		&& (p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::vide
+			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::un
+			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::deux
+			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::trois
+			|| p->getCase(pos_y + 1, pos_x - 1)->m_type == Case::Type::quatre)
+		&& p->getCase(pos_y + 1, pos_x - 1)->m_state == Case::State::close)
+		openCase(p, pos_x - 1, pos_y + 1);
+
 	//Gauche
 	if (pos_x > 0 
 		&& (p->getCase(pos_y, pos_x-1)->m_type == Case::Type::vide 
@@ -209,15 +266,7 @@ void contamination(Plateau* p, int pos_x, int pos_y) {
 		&& p->getCase(pos_y, pos_x-1)->m_state == Case::State::close)
 		openCase(p, pos_x - 1, pos_y);
 
-	//Droite
-	if (pos_x < p->get_size_x() -1
-		&& (p->getCase(pos_y, pos_x+1)->m_type == Case::Type::vide 
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::un
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::deux
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::trois
-			|| p->getCase(pos_y, pos_x + 1)->m_type == Case::Type::quatre)
-		&& p->getCase(pos_y, pos_x+1)->m_state == Case::State::close)
-		openCase(p, pos_x + 1, pos_y);
+	
 
 
 }
@@ -242,6 +291,11 @@ int isWin(Plateau* p) {
 
 void flag(Plateau* p, int pos_x, int pos_y) {
 
-	p->getCase(pos_y, pos_x)->m_isFlag = 1;
+	
+
+	if(p->getCase(pos_y,pos_x)->m_isFlag == 1)
+		p->getCase(pos_y, pos_x)->m_isFlag = 0;
+	else if(p->getCase(pos_y, pos_x)->m_isFlag == 0)
+		p->getCase(pos_y, pos_x)->m_isFlag = 1;
 
 }
