@@ -76,6 +76,12 @@ StyleCopReport.xml
 *.sbr
 *.tlb
 *.tli
+*.txt
+*.json
+*.rc
+*.vcxproj
+*.filters
+*.sln
 *.tlh
 *.tmp
 *.tmp_proj
