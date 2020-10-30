@@ -1,4 +1,5 @@
 #include <TGUI/TGUI.hpp>
+#include <iostream>
 
 #include "jeu.h"
 #include "../Model/Terrain.h"
@@ -114,9 +115,9 @@ void lancerPartie(int width, int height, int mine) {
 
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
-					if (event.mouseButton.button == sf::Mouse::Right && terrain->getCase(event.mouseButton.x / 20, event.mouseButton.y / 20)->m_state != Case::State::open) {
-						flag(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
-						sf::sleep(sf::milliseconds(100));
+					if (event.mouseButton.button == sf::Mouse::Right) {
+							flag(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
+							sf::sleep(sf::milliseconds(100));
 					}
 					else if (event.mouseButton.button == sf::Mouse::Left)
 						state = openCase(terrain, event.mouseButton.x / 20, event.mouseButton.y / 20);
@@ -267,10 +268,10 @@ int possibleBombLeft(Terrain* p, int mine) {
 
 void flag(Terrain* p, int pos_x, int pos_y) {
 
-	if(p->getCase(pos_y,pos_x)->m_isFlag == 1)
-		p->getCase(pos_y, pos_x)->m_isFlag = 0;
-	else if(p->getCase(pos_y, pos_x)->m_isFlag == 0)
+	if(p->getCase(pos_y, pos_x)->m_isFlag == 0)
 		p->getCase(pos_y, pos_x)->m_isFlag = 1;
+	else
+		p->getCase(pos_y, pos_x)->m_isFlag = 0;
 
 }
 
