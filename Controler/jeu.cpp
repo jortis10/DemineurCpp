@@ -22,6 +22,7 @@ void lancerJeu() {
 
 	select_diff->setSelectedItem("Normale");
 
+
 	button->connect("pressed", [&]() {
 		if (!select.isEmpty()) {
 

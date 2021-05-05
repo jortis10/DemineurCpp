@@ -46,7 +46,7 @@ Label.text_a {
 ComboBox.select_diff {
     ChangeItemOnScroll = true;
     ExpandDirection = Down;
-    Items = [Facile, Normale, Difficile, Expert, Armageddon];
+    Items = [Facile, Normale, Difficile, Expert];
     ItemsToDisplay = 0;
     MaximumItems = 0;
     Position = (90, 70);
