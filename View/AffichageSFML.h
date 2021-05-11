@@ -6,7 +6,7 @@
 
 #define SCALE 0.1953125
 
-void afficherTerrainSFML(Terrain* p, sf::RenderWindow& window);
+void afficherTerrainSFML(Terrain* p, sf::RenderWindow& window, bool pressed);
 sf::Texture loadTexture(std::string texture);
 void setIcon(sf::RenderWindow& window);
 

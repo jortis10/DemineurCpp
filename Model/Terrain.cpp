@@ -43,6 +43,7 @@ void Terrain::initTerrain() {
 }
 void Terrain::remplirTerrain(int mine) {
 
+	/*Génération de l'aléatoire*/
 	std::default_random_engine re(std::chrono::system_clock::now().time_since_epoch().count());
 	std::default_random_engine rez(std::chrono::system_clock::now().time_since_epoch().count());
 	std::uniform_int_distribution<int> distrib_x{ 0, m_size_x - 1 };
@@ -83,40 +84,32 @@ void Terrain::remplirTerrain(int mine) {
 				/*Haut gauche*/
 				if (i > 0 && j > 0 && cases[i - 1][j - 1]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Haut*/
 				if (i > 0 && cases[i - 1][j]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Haut droite*/
 				if (i > 0 && j < m_size_x - 1 && cases[i - 1][j + 1]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Droite*/
 				if (j < m_size_x - 1 && cases[i][j + 1]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Bas droite*/
 				if (i < m_size_y - 1 && j < m_size_x - 1 &&  cases[i + 1][j + 1]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Bas*/
 				if (i < m_size_y - 1 && cases[i + 1][j]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Bas gauche*/
 				if (i < m_size_y - 1 && j > 0 && cases[i + 1][j - 1]->m_type == Case::Type::mine)
 					count += 1;
-
 				/*Gauche*/
 				if (j > 0 && cases[i][j - 1]->m_type == Case::Type::mine)
 					count += 1;
 
-			
 
 				switch (count)
 				{
-				case 1: cases[i][j]->m_type = Case::Type::un;
+					case 1: cases[i][j]->m_type = Case::Type::un;
 						break;
 					case 2: cases[i][j]->m_type = Case::Type::deux;
 						break;

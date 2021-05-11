@@ -5,6 +5,11 @@
 #include "../Model/Terrain.h"
 #include "../View/AffichageSFML.h"
 
+inline const char* const BoolToString(bool b)
+{
+	return b ? "true" : "false";
+}
+
 void lancerJeu() {
 
 	int width,height,mine;
@@ -81,6 +86,8 @@ void lancerPartie(int width, int height, int mine) {
 	Terrain* terrain = new Terrain(width, height);
 	int state = 0;
 	int i = 0;
+	bool pressed = false;
+	bool stateChanged = true;
 
 	terrain->remplirTerrain(mine);
 
@@ -93,23 +100,33 @@ void lancerPartie(int width, int height, int mine) {
 	
 	while (window.isOpen())
 	{
+		
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+				stateChanged = true;
+				pressed = true;
+			}
+			else {
+				stateChanged = true;
+				pressed = false;
+			}
 		}
-		window.clear(sf::Color::White);
+		//window.clear(sf::Color::White);
 
 		/*JEU*/
 			if (isWin(terrain) == 0 && state != -1) {
-				i++;
 				window.setTitle("Bombe restante : "+std::to_string(possibleBombLeft(terrain,mine)));
 
 				//JEU
 
 				if (event.type == sf::Event::MouseButtonPressed)
 				{
+					stateChanged = true;
 					if (event.mouseButton.button == sf::Mouse::Right) {
 							flag(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
 							sf::sleep(sf::milliseconds(100));
@@ -117,6 +134,16 @@ void lancerPartie(int width, int height, int mine) {
 					else if (event.mouseButton.button == sf::Mouse::Left)
 						state = openCase(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
 				}
+				
+
+				/*if (event.type == sf::Event::KeyPressed) {
+					window.setTitle("BOOOOOOOOOM");
+					pressed = true;
+					
+				}
+				else {
+					pressed = false;
+				}*/
 			}
 
 			//Condition de fin de partie
@@ -134,6 +161,7 @@ void lancerPartie(int width, int height, int mine) {
 
 				state = 2;
 			}
+
 			if (state == 2)
 			{
 				sf::sleep(sf::seconds(5));
@@ -141,9 +169,11 @@ void lancerPartie(int width, int height, int mine) {
 				window.close();
 				lancerJeu();
 			}
+
+			afficherTerrainSFML(terrain, window, pressed);
+			window.display();
+			stateChanged = false;
 		
-		afficherTerrainSFML(terrain, window);
-		window.display();
 	}
 }
 int openCase(Terrain* p,int pos_x,int pos_y) {
