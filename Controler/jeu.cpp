@@ -1,14 +1,12 @@
 #include <TGUI/TGUI.hpp>
 #include <iostream>
+#include<windows.h>
+
 
 #include "jeu.h"
 #include "../Model/Terrain.h"
 #include "../View/AffichageSFML.h"
 
-inline const char* const BoolToString(bool b)
-{
-	return b ? "true" : "false";
-}
 
 void lancerJeu() {
 
@@ -17,7 +15,6 @@ void lancerJeu() {
 
 	sf::RenderWindow menu(sf::VideoMode(370, 200), "Demineur", sf::Style::Close);
 	setIcon(menu);
-	menu.setFramerateLimit(30);
 	tgui::Gui gui{ menu };
 
 	gui.loadWidgetsFromFile("Assets/menu.txt");
@@ -63,6 +60,7 @@ void lancerJeu() {
 
 	while (menu.isOpen())
 	{
+		Sleep(10);
 		menu.clear(sf::Color::White);
 
 		select = select_diff->getSelectedItem();
@@ -93,13 +91,13 @@ void lancerPartie(int width, int height, int mine) {
 
 	// création de la fenêtre
 	sf::RenderWindow window(sf::VideoMode(width * 25, height * 25), "Demineur", sf::Style::Close);
-	window.setFramerateLimit(120);
 
 	setIcon(window);
 
 	
 	while (window.isOpen())
 	{
+		Sleep(10);
 		
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -131,19 +129,11 @@ void lancerPartie(int width, int height, int mine) {
 							flag(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
 							sf::sleep(sf::milliseconds(100));
 					}
-					else if (event.mouseButton.button == sf::Mouse::Left)
+					else if (event.mouseButton.button == sf::Mouse::Left) {
 						state = openCase(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
+					}
 				}
 				
-
-				/*if (event.type == sf::Event::KeyPressed) {
-					window.setTitle("BOOOOOOOOOM");
-					pressed = true;
-					
-				}
-				else {
-					pressed = false;
-				}*/
 			}
 
 			//Condition de fin de partie
@@ -170,13 +160,18 @@ void lancerPartie(int width, int height, int mine) {
 				lancerJeu();
 			}
 
-			afficherTerrainSFML(terrain, window, pressed);
-			window.display();
-			stateChanged = false;
+			if(stateChanged){
+				afficherTerrainSFML(terrain, window, pressed);
+				window.display();
+				stateChanged = false;
+			}
+			
 		
 	}
 }
 int openCase(Terrain* p,int pos_x,int pos_y) {
+
+	p->getCase(pos_y, pos_x)->m_refresh = true;
 
 	if (p->getCase(pos_y, pos_x)->m_type == Case::Type::mine && p->getCase(pos_y, pos_x)->m_state == Case::State::close) {
 		p->getCase(pos_y, pos_x)->m_type = Case::Type::boom;
@@ -199,7 +194,7 @@ void openAllCase(Terrain* p) {
 
 	for (int i = 0; i < p->get_size_y(); i++) {
 		for (int j = 0; j < p->get_size_x(); j++) {
-
+			p->getCase(i, j)->m_refresh = true;
 			p->getCase(i, j)->m_state = Case::State::open;
 
 		}

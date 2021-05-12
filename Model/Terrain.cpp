@@ -52,8 +52,7 @@ void Terrain::remplirTerrain(int mine) {
 	auto rd_x = bind(distrib_x, re);
 	auto rd_y = bind(distrib_y, rez);
 	
-	/*Génération du plateau avec case vide*/
-
+	/*Génération du plateau avec case vide et fermé*/
 	for (int i = 0; i < m_size_y; i++) {
 		for (int j = 0; j < m_size_x; j++) {
 			cases[i][j]->modifyCase(Case::Type::vide, Case::State::close,0);
@@ -70,7 +69,6 @@ void Terrain::remplirTerrain(int mine) {
 			cases[y][x]->modifyCase(Case::Type::mine, Case::State::close,0);
 			i++;
 		}
-			
 	}
 	/*Génération des chiffres autours des mines*/
 	int count = 0;

@@ -8,6 +8,8 @@ public:
 	enum class Type{ vide, un, deux, trois, quatre, cinq, six, sept, huit, mine, boom };
 	enum class State{ close, open, flag};
 
+	bool m_refresh = true;
+
 	bool m_isFlag = 0;
 
 	Type m_type;

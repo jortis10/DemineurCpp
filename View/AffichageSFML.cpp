@@ -130,87 +130,92 @@ void afficherTerrainSFML(Terrain* p, sf::RenderWindow& window, bool pressed) {
 			}
 
 
-			//Affichage case non découverte
-			if (p->getCase(i, j)->m_state == Case::State::close
-				&& p->getCase(i, j)->m_isFlag == 0
-				&& !pressed) {
-				
-				
-				sprite_close.setPosition(positionSprite);
-				window.draw(sprite_close);
-			}
+			if (p->getCase(i, j)->m_refresh = true) {
 
-			//Affichage drapeau
-			else if (p->getCase(i, j)->m_state == Case::State::close
-				&& p->getCase(i, j)->m_isFlag == 1
-				&& !pressed) {
+				//Affichage case non découverte
+				if (p->getCase(i, j)->m_state == Case::State::close
+					&& p->getCase(i, j)->m_isFlag == 0
+					&& !pressed) {
 
-				sprite_drapeau.setPosition(positionSprite);
-				window.draw(sprite_drapeau);
-			}
 
-			//affichage case découverte
-			else if (( p->getCase(i, j)->m_state == Case::State::open) 
-				&& !pressed) {
-
-				switch (p->getCase(i, j)->m_type) {
-
-				case Case::Type::vide:
-					
-					sprite_vide.setPosition(positionSprite);
-					window.draw(sprite_vide);
-					break;
-				case Case::Type::mine:
-					
-					sprite_mine.setPosition(positionSprite);
-					window.draw(sprite_mine);
-					break;
-				case Case::Type::un:
-					
-					sprite_un.setPosition(positionSprite);
-					window.draw(sprite_un);
-					break;
-				case Case::Type::deux:
-					
-					sprite_deux.setPosition(positionSprite);
-					window.draw(sprite_deux);
-					break;
-				case Case::Type::trois:
-					
-					sprite_trois.setPosition(positionSprite);
-					window.draw(sprite_trois);
-					break;
-				case Case::Type::quatre:
-					
-					sprite_quatre.setPosition(positionSprite);
-					window.draw(sprite_quatre);
-					break;
-				case Case::Type::cinq:
-					
-					sprite_cinq.setPosition(positionSprite);
-					window.draw(sprite_cinq);
-					break;
-				case Case::Type::six:
-					
-					sprite_six.setPosition(positionSprite);
-					window.draw(sprite_six);
-					break;
-				case Case::Type::sept:
-					
-					sprite_sept.setPosition(positionSprite);
-					window.draw(sprite_sept);
-					break;
-				case Case::Type::huit:
-					
-					sprite_huit.setPosition(positionSprite);
-					window.draw(sprite_huit);
-					break;
-				case Case::Type::boom:
-
-					sprite_boom.setPosition(positionSprite);
-					window.draw(sprite_boom);
-					break;
+					sprite_close.setPosition(positionSprite);
+					window.draw(sprite_close);
 				}
+
+				//Affichage drapeau
+				else if (p->getCase(i, j)->m_state == Case::State::close
+					&& p->getCase(i, j)->m_isFlag == 1
+					&& !pressed) {
+
+					sprite_drapeau.setPosition(positionSprite);
+					window.draw(sprite_drapeau);
+				}
+
+				//affichage case découverte
+				else if ((p->getCase(i, j)->m_state == Case::State::open)
+					&& !pressed) {
+
+					switch (p->getCase(i, j)->m_type) {
+
+					case Case::Type::vide:
+
+						sprite_vide.setPosition(positionSprite);
+						window.draw(sprite_vide);
+						break;
+					case Case::Type::mine:
+
+						sprite_mine.setPosition(positionSprite);
+						window.draw(sprite_mine);
+						break;
+					case Case::Type::un:
+
+						sprite_un.setPosition(positionSprite);
+						window.draw(sprite_un);
+						break;
+					case Case::Type::deux:
+
+						sprite_deux.setPosition(positionSprite);
+						window.draw(sprite_deux);
+						break;
+					case Case::Type::trois:
+
+						sprite_trois.setPosition(positionSprite);
+						window.draw(sprite_trois);
+						break;
+					case Case::Type::quatre:
+
+						sprite_quatre.setPosition(positionSprite);
+						window.draw(sprite_quatre);
+						break;
+					case Case::Type::cinq:
+
+						sprite_cinq.setPosition(positionSprite);
+						window.draw(sprite_cinq);
+						break;
+					case Case::Type::six:
+
+						sprite_six.setPosition(positionSprite);
+						window.draw(sprite_six);
+						break;
+					case Case::Type::sept:
+
+						sprite_sept.setPosition(positionSprite);
+						window.draw(sprite_sept);
+						break;
+					case Case::Type::huit:
+
+						sprite_huit.setPosition(positionSprite);
+						window.draw(sprite_huit);
+						break;
+					case Case::Type::boom:
+
+						sprite_boom.setPosition(positionSprite);
+						window.draw(sprite_boom);
+						break;
+					}
+				}
+
+				p->getCase(i, j)->m_refresh = false;
 			}
 			
 		}
