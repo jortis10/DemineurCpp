@@ -1,11 +1,11 @@
 #include <TGUI/TGUI.hpp>
 #include <iostream>
-#include<windows.h>
-
 
 #include "jeu.h"
 #include "../Model/Terrain.h"
 #include "../View/AffichageSFML.h"
+
+
 
 
 void lancerJeu() {
@@ -60,7 +60,7 @@ void lancerJeu() {
 
 	while (menu.isOpen())
 	{
-		Sleep(10);
+		sf::sleep(sf::milliseconds(20));
 		menu.clear(sf::Color::White);
 
 		select = select_diff->getSelectedItem();
@@ -81,30 +81,49 @@ void lancerJeu() {
 }
 void lancerPartie(int width, int height, int mine) {
 
+	/*Création du terrain*/
 	Terrain* terrain = new Terrain(width, height);
+	View* view = new View();
+
+	/*Variables d'état*/
 	int state = 0;
-	int i = 0;
 	bool pressed = false;
 	bool stateChanged = true;
 
+	/*Remplissage du terrain de jeu*/
 	terrain->remplirTerrain(mine);
 
-	// création de la fenêtre
+	/*création de la fenêtre*/
 	sf::RenderWindow window(sf::VideoMode(width * 25, height * 25), "Demineur", sf::Style::Close);
-
 	setIcon(window);
 
-	
+	/*Fenêtre ouverte*/
 	while (window.isOpen())
 	{
-		Sleep(10);
+
+		sf::sleep(sf::milliseconds(20));
 		
+		/*Evenements*/
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
+			/*Fermeture fenêtre*/
 			if (event.type == sf::Event::Closed)
 				window.close();
 
+			/*Clic souris*/
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				stateChanged = true;
+				if (event.mouseButton.button == sf::Mouse::Right) {
+					flag(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
+					sf::sleep(sf::milliseconds(100));
+				}
+				else if (event.mouseButton.button == sf::Mouse::Left)
+					state = openCase(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
+			}
+
+			/*Appui espace*/
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 				stateChanged = true;
 				pressed = true;
@@ -114,61 +133,39 @@ void lancerPartie(int width, int height, int mine) {
 				pressed = false;
 			}
 		}
-		//window.clear(sf::Color::White);
+
+		//Affichage
+		if (stateChanged) {
+			afficherTerrainSFML(view, terrain, window, pressed);
+			window.display();
+			stateChanged = false;
+		}
 
 		/*JEU*/
-			if (isWin(terrain) == 0 && state != -1) {
-				window.setTitle("Bombe restante : "+std::to_string(possibleBombLeft(terrain,mine)));
+		if (isWin(terrain) == 0 && state != -1) {
+			window.setTitle("Bombe restante : "+std::to_string(possibleBombLeft(terrain,mine)));
+		}
+		//Condition de fin de partie
+		else if (isWin(terrain) == 1 && state != -1) { //si win
+			window.setTitle("WIN");
+			state = 2;
+		}
+		else if (state == -1) { //si loose
+			window.setTitle("BOOOOOOOOOM");
+			state = 2;
+		}
 
-				//JEU
+		/*Fermeture de la fenêtre*/
+		if (state == 2)
+		{
+			sf::sleep(sf::seconds(5));
 
-				if (event.type == sf::Event::MouseButtonPressed)
-				{
-					stateChanged = true;
-					if (event.mouseButton.button == sf::Mouse::Right) {
-							flag(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
-							sf::sleep(sf::milliseconds(100));
-					}
-					else if (event.mouseButton.button == sf::Mouse::Left) {
-						state = openCase(terrain, event.mouseButton.x / 25, event.mouseButton.y / 25);
-					}
-				}
-				
-			}
-
-			//Condition de fin de partie
-			else if (isWin(terrain) == 1 && state != -1) { //si win
-				window.setTitle("WIN");
-
-				//Jouer un son
-
-				state = 2;
-			}
-			else if (state == -1) { //si loose
-				window.setTitle("BOOOOOOOOOM");
-
-				//Jouer un son
-
-				state = 2;
-			}
-
-			if (state == 2)
-			{
-				sf::sleep(sf::seconds(5));
-
-				window.close();
-				lancerJeu();
-			}
-
-			if(stateChanged){
-				afficherTerrainSFML(terrain, window, pressed);
-				window.display();
-				stateChanged = false;
-			}
-			
-		
+			window.close();
+			lancerJeu();
+		}		
 	}
 }
+
 int openCase(Terrain* p,int pos_x,int pos_y) {
 
 	p->getCase(pos_y, pos_x)->m_refresh = true;
